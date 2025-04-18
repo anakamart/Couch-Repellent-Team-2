@@ -1,9 +1,9 @@
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import ButtonFunctionality from './ButtonFunctionality';
 import Checkin from './Checkin';
 import History from './History';
-import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 
 const Stack = createStackNavigator();
 
@@ -45,7 +45,7 @@ export default function App() {
           name="Checkin"
           component = {Checkin}
           options = {({navigation}) => ({
-            title: 'Checkin',
+            title: 'Checked In',
             headerLeft: () => (
               <CustomBackButton onPress={() => navigation.goBack()} label="Home" />
             ),
