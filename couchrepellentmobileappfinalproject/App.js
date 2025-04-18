@@ -1,35 +1,67 @@
-import { Text, SafeAreaView, StyleSheet } from 'react-native';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import ButtonFunctionality from './ButtonFunctionality';
+import Checkin from './Checkin';
+import History from './History';
+import {TouchableOpacity, Text, StyleSheet} from 'react-native';
 
-// You can import supported modules from npm
-import { Card } from 'react-native-paper';
+const Stack = createStackNavigator();
 
-// or any files within the Snack
-import AssetExample from './components/AssetExample';
+const CustomBackButton = ({onPress, label}) => (
+  <TouchableOpacity onPress = {onPress} style = {styles.backButton}>
+    <Text style ={styles.backText}>{`< ${label}`}</Text>
+  </TouchableOpacity>
+);
+
+const styles = StyleSheet.create({
+  backButton: {
+    marginLeft: 10,
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  backText: {
+    color: 'blue',
+    fontSize: 18,
+  },
+});
 
 export default function App() {
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.paragraph}>
-        Change code in the editor and watch it change on your phone! Save to get a shareable url.
-      </Text>
-      <Card>
-        <AssetExample />
-      </Card>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Stack.Navigator
+        initialRouteName = "Home"
+        screenOptions = {{
+          headerTitleAlign: 'center', 
+        }}
+      >
+        <Stack.Screen
+          name="Home"
+          component = {ButtonFunctionality}
+          options = {{
+            title: 'Home',
+          }}
+        />
+        <Stack.Screen
+          name="Checkin"
+          component = {Checkin}
+          options = {({navigation}) => ({
+            title: 'Checkin',
+            headerLeft: () => (
+              <CustomBackButton onPress={() => navigation.goBack()} label="Home" />
+            ),
+          })}
+        />
+        <Stack.Screen
+          name="History"
+          component = {History}
+          options = {({navigation}) => ({
+            title: 'History',
+            headerLeft: () => (
+              <CustomBackButton onPress={() => navigation.goBack()} label="Home" />
+            ),
+          })}
+        />
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    backgroundColor: '#ecf0f1',
-    padding: 8,
-  },
-  paragraph: {
-    margin: 24,
-    fontSize: 18,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-});
