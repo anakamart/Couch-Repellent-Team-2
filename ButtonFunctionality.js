@@ -3,6 +3,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 const primary = 'white';
 const secondary = 'blue';
 const tertiary = 'green';
+const quaternary = 'red';
 
 const styles = StyleSheet.create({
   container: {
@@ -30,6 +31,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     margin: 5
   },
+  buttonRecord: {
+    backgroundColor: quaternary,
+    padding: 10,
+    borderRadius: 5,
+    margin: 5
+  },
   text: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -53,6 +60,9 @@ const ButtonFunctionality = ({navigation}) => {
         </TouchableOpacity>
         <TouchableOpacity style = {styles.buttonHistory} onPress = {() => navigation.navigate('History')}>
           <Text style = {styles.buttonText}>History</Text>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.buttonRecord} onPress={() => navigation.navigate('Workout Recording')}>
+          <Text style={styles.buttonText}>Workout Recording</Text>
         </TouchableOpacity>
       </View>
     </View>
