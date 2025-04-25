@@ -4,7 +4,6 @@ import { StyleSheet, Text, TouchableOpacity } from 'react-native';
 import ButtonFunctionality from './ButtonFunctionality';
 import Checkin from './Checkin';
 import History from './History';
-import WorkoutRecording from './WorkoutRecording'
 
 const Stack = createStackNavigator();
 
@@ -57,16 +56,6 @@ export default function App() {
           component = {History}
           options = {({navigation}) => ({
             title: 'History',
-            headerLeft: () => (
-              <CustomBackButton onPress={() => navigation.goBack()} label="Home" />
-            ),
-          })}
-        />
-          <Stack.Screen
-          name="Workout Recording"
-          component = {WorkoutRecording}
-          options = {({navigation}) => ({
-            title: 'Workout Recording',
             headerLeft: () => (
               <CustomBackButton onPress={() => navigation.goBack()} label="Home" />
             ),
