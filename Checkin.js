@@ -94,44 +94,59 @@ const Checkin = () => {
   /**
    * Function to handle checking out by sending data as JSON object to backend url
    */
-  const handleCheckout = async () => {
-    if (!checkinTime) {
-      Alert.alert('Error', 'You need to check in before you can checkout!');
-      return;
-    }
+const handleCheckout = async () => {
+  if (!checkinTime) {
+    Alert.alert('Error', 'You need to check in before you can checkout!');
+    return;
+  }
 
-    const checkoutData = {
-      [checkinTime]: {
-        location: {
-          latitude: region.latitude,
-          longitude: region.longitude,
-        },
-        activities: activities,
+  const checkoutData = {
+    [checkinTime]: {
+      location: {
+        latitude: region.latitude,
+        longitude: region.longitude,
       },
-    };
+      activities: activities,
+    },
+  };
 
-    // JSON object for checking out
-    try {
-      const response = await fetch(
+  try {
+    // Fetch data
+    const response = await fetch(
+      'https://mec402.boisestate.edu/csclasses/cs402/project/loadjson.php?user=couchrepel'
+    );
+
+    if (response.ok) {
+      const existingData = await response.json();
+
+      // Append data
+      const updatedData = { ...existingData, ...checkoutData };
+
+      // Send the updated data back to the server (inefficient, but the backend url doesn't automatically append data, so this will do)
+      const updateResponse = await fetch(
         'https://mec402.boisestate.edu/csclasses/cs402/project/savejson.php?user=couchrepel',
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify(checkoutData),
+          body: JSON.stringify(updatedData),
         }
       );
 
-      if (response.ok) {
+      if (updateResponse.ok) {
         Alert.alert('Checkout successful');
       } else {
         Alert.alert('Checkout failed');
       }
-    } catch (error) {
-      Alert.alert('Error', 'An error occurred while checking out.');
+    } else {
+      Alert.alert('Failed to fetch existing data');
     }
-  };
+  } catch (error) {
+    Alert.alert('Error', 'An error occurred while checking out.');
+  }
+};
+
 
   /**
    * Function to add new activity 
