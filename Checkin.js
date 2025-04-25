@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Text, View, Alert, StyleSheet, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 import * as Location from 'expo-location';
 import MapView, { Marker } from 'react-native-maps';
+import { useNavigation } from '@react-navigation/native';
 
 // Styling Sheet
 const styles = StyleSheet.create({
@@ -57,6 +58,7 @@ const Checkin = () => {
   const [weight, setWeight] = useState('');
   const [sets, setSets] = useState('');
   const [checkinTime, setCheckinTime] = useState('');
+  const navigation = useNavigation();
 
   // Getting permission for location, just like camera
   useEffect(() => {
@@ -150,6 +152,7 @@ const Checkin = () => {
 
         if (updateResponse.ok) {
           Alert.alert('Checkout successful');
+          navigation.navigate('Home');
         } else {
           Alert.alert('Checkout failed');
         }
